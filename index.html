@@ -6602,7 +6602,7 @@
                                             if (!progressData && !content.trim()) continue;
                                             if (existVoice && enableAutoVoice && currentVoiceIdx === autoVoiceDataIdx) {
                                                 if (!progressData && content.trim())
-                                                    { spliter = content.match(/[.,?!~。，？！~\n\s]/);}
+                                                    { spliter = content.match(/\.|,|:|\?|!|~| |，|。|：|？|！|\n|\t\r/);}
                                                 else
                                                     { spliter = content.match(/\.|\?|!|~|。|？|！|\n/);}
                                                 if (spliter) {
