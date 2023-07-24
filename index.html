@@ -6603,9 +6603,9 @@
                                             if (!progressData && !content.trim()) continue;
                                             if (existVoice && enableAutoVoice && currentVoiceIdx === autoVoiceDataIdx) {
                                                 if (autoVoiceIdx==0)
-                                                    { spliter = content.match(/\.|,|:|\?|!|~| |，|。|：|？|！|\n|\t\r/);}
+                                                    { spliter = content.match(/\.(?![0-9])|,|:|\?|!|~| |，|。|：|？|！|\n|\t\r/);}
                                                 else
-                                                    { spliter = content.match(/\.|\?|!|~|。|？|！|\n/);}
+                                                    { spliter = content.match(/\.(?![0-9])|\?|!|~|。|？|！|\n/);}
                                                 if (spliter) {
                                                     let voiceText = progressData.slice(autoVoiceIdx) + content.slice(0, spliter.index + 1);
                                                     autoVoiceIdx += voiceText.length;
