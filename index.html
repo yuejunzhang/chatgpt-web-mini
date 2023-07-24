@@ -6540,6 +6540,7 @@
                 })
                 let headers = {"Content-Type": "application/json"};
                 if (customAPIKey) headers["Authorization"] = "Bearer " + customAPIKey;
+                autoSpeechEvent("...", currentResEle);
                 const res = await fetch(apiHost + API_URL, {
                     method: "POST",
                     headers,
