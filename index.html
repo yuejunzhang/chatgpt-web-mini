@@ -5176,6 +5176,7 @@
                 addNewChat();
                 chatEleAdd(activeChatIdx);
             }
+            messagesEle.scrollTop = messagesEle.scrollHeight;
         };
         const initExpanded = () => {
             let folderIdx = folderData.findIndex(item => {
