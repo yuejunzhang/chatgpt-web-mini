@@ -6359,7 +6359,7 @@
                 autoOnlineVoiceFlag = true;
             }
         }
-        const autoSpeechEvent = (content, ele, force = false, end = false) => {
+        const autoSpeechEvent = (content, ele, force = false, end = false,awaken=false) => {
             if (ele.lastChild.lastChild.classList.contains("readyVoice")) {
                 ele.classList.add("showVoiceCls");
                 ele.lastChild.lastChild.className = "voiceCls pauseVoice";
@@ -6384,6 +6384,7 @@
                 };
                 let bufArray = [];
                 autoVoiceSocket.onmessage = (e) => {
+                    if (awaken) return;
                     if (e.data instanceof ArrayBuffer) {
                         (supportMSE ? speechQuene : bufArray).push(e.data.slice(130));
                     } else {
@@ -6540,7 +6541,7 @@
                 })
                 let headers = {"Content-Type": "application/json"};
                 if (customAPIKey) headers["Authorization"] = "Bearer " + customAPIKey;
-                if(enableAutoVoice){autoSpeechEvent("?            ?", currentResEle);}
+                if(enableAutoVoice){autoSpeechEvent("? ?", currentResEle,true);}
                 const res = await fetch(apiHost + API_URL, {
                     method: "POST",
                     headers,
