@@ -6601,7 +6601,7 @@
                                         if (content) {
                                             if (!progressData && !content.trim()) continue;
                                             if (existVoice && enableAutoVoice && currentVoiceIdx === autoVoiceDataIdx) {
-                                                if (!progressData && content.trim())
+                                                if (autoVoiceIdx==0)
                                                     { spliter = content.match(/\.|,|:|\?|!|~| |，|。|：|？|！|\n|\t\r/);}
                                                 else
                                                     { spliter = content.match(/\.|\?|!|~|。|？|！|\n/);}
