@@ -6597,10 +6597,14 @@
                                         break;
                                     } else {
                                         let content = payload.choices[0].delta.content;
+                                        let spliter;
                                         if (content) {
                                             if (!progressData && !content.trim()) continue;
                                             if (existVoice && enableAutoVoice && currentVoiceIdx === autoVoiceDataIdx) {
-                                                let spliter = content.match(/\.|\?|!|~|。|？|！|\n/);
+                                                if (!progressData && content.trim())
+                                                    { spliter = content.match(/\.|\?|!|~|。|？|！|\n|,/);}
+                                                else
+                                                    { spliter = content.match(/\.|\?|!|~|。|？|！|\n/);}
                                                 if (spliter) {
                                                     let voiceText = progressData.slice(autoVoiceIdx) + content.slice(0, spliter.index + 1);
                                                     autoVoiceIdx += voiceText.length;
