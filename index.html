@@ -5640,7 +5640,8 @@
                 updateChats();
             }
             if (systemRole === void 0) {
-                systemRole = systemEle.value = localSystem || presetRoleData.default || "\n当前时间："+new Date().toLocaleString('zh-CN');
+                systemRole = systemEle.value = localSystem || presetRoleData.default || "");
+                systemRole += "\n当前时间："+new Date().toLocaleString('zh-CN')
                 if (systemRole) {
                     data.unshift({role: "system", content: systemRole});
                     processIdx(1);
