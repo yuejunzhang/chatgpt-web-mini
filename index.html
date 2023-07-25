@@ -6542,7 +6542,7 @@
                     if (item.role === "assistant") return {role: item.role, content: item.content};
                     else return item;
                 })
-                let conversationPrompt = {role: "system", content: "在用户需要时可提供当前时间：" + new Date().toLocaleString('zh-CN')};
+                let conversationPrompt = {role: "system", content: "现在时间：" + new Date().toLocaleString('zh-CN')};
                  
                 dataSlice.unshift(conversationPrompt);
                 let headers = {"Content-Type": "application/json"};
