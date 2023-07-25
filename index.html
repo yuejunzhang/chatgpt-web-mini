@@ -4911,7 +4911,7 @@
         };
         const addNewChat = () => {
             let chat = {name: translations[locale]["newChatName"], data: []};
-            if (presetRoleData.default) chat.data.unshift({role: "system", content: presetRoleData.default});
+            if (presetRoleData.default) chat.data.unshift({role: "system", content: presetRoleData.default + "\n当前时间："+new Date().toString()});
             preEle.selectedIndex = 0;
             chatsData.push(chat);
             chatIdxs.push(chatsData.length - 1);
@@ -5629,7 +5629,7 @@
                     if (data[0] && data[0].role === "system") {
                         data[0].content = systemRole;
                     } else {
-                        data.unshift({role: "system", content: systemRole});
+                        data.unshift({role: "system", content: systemRole + "\n当前时间："+new Date().toString()});
                         processIdx(1);
                     }
                 } else if (data[0] && data[0].role === "system") {
@@ -5641,7 +5641,7 @@
             if (systemRole === void 0) {
                 systemRole = systemEle.value = localSystem || presetRoleData.default || "";
                 if (systemRole) {
-                    data.unshift({role: "system", content: systemRole});
+                    data.unshift({role: "system", content: systemRole + "\n当前时间："+new Date().toString()});
                     processIdx(1);
                     updateChats();
                 }
