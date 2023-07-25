@@ -5622,13 +5622,12 @@
             }
             setAvatar.dispatchEvent(new Event("change"));
             let localSystem = localStorage.getItem("system");
-            // systemRole += "\n当前时间："+new Date().toLocaleString('zh-CN')
             systemEle.onchange = () => {
                 systemRole = systemEle.value;
                 localStorage.setItem("system", systemRole);
                 if (systemRole) {
                     if (data[0] && data[0].role === "system") {
-                        data[0].content = systemRole ;
+                        data[0].content = systemRole;
                     } else {
                         data.unshift({role: "system", content: systemRole});
                         processIdx(1);
@@ -5640,8 +5639,7 @@
                 updateChats();
             }
             if (systemRole === void 0) {
-                systemRole = systemEle.value = localSystem || presetRoleData.default || "");
-                // systemRole += "\n当前时间："+new Date().toLocaleString('zh-CN')
+                systemRole = systemEle.value = localSystem || presetRoleData.default || "";
                 if (systemRole) {
                     data.unshift({role: "system", content: systemRole});
                     processIdx(1);
