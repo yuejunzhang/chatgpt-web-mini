@@ -5627,7 +5627,7 @@
                 localStorage.setItem("system", systemRole);
                 if (systemRole) {
                     if (data[0] && data[0].role === "system") {
-                        data[0].content = systemRole;
+                        data[0].content = systemRole + "\n当前时间："+new Date().toString();
                     } else {
                         data.unshift({role: "system", content: systemRole + "\n当前时间："+new Date().toString()});
                         processIdx(1);
@@ -5639,7 +5639,7 @@
                 updateChats();
             }
             if (systemRole === void 0) {
-                systemRole = systemEle.value = localSystem || presetRoleData.default || "";
+                systemRole = systemEle.value = localSystem || presetRoleData.default || " ";
                 if (systemRole) {
                     data.unshift({role: "system", content: systemRole + "\n当前时间："+new Date().toString()});
                     processIdx(1);
