@@ -875,9 +875,31 @@ const chatEleEvent = function (ev) {
         delChat(idx, this, folderIdx, inFolderIdx);
     }
 };
+
+async function updateMask(index){
+    loglen=chatlog.children.length;
+    if(loglen==0){
+        Mask=document.getElementById('Mask');
+        Mask.style.height = 0;            
+        return;
+    }
+    if(loglen>=index && index>=0 ){
+        Mask_height=chatlog.children[loglen-index-1].offsetTop;
+        Mask=document.getElementById('Mask');
+        Mask.style.height = Mask_height.toString()+"px";}
+    }
+
 const updateChats = () => {
+    
     localStorage.setItem("chats", JSON.stringify(chatsData));
     updateChatIdxs();
+    try {
+        updateMask(contLen);
+      } catch (error) {
+        console.error("发生异常：", error.message);
+        return null;
+      } 
+    
 };
 const updateChatIdxs = () => {
     localStorage.setItem("chatIdxs", JSON.stringify(chatIdxs));
@@ -928,7 +950,9 @@ const activeChat = (ele) => {
         systemRole = void 0;
         systemEle.value = "";
     }
+
     chatlog.innerHTML = "";
+
     if (systemRole ? data.length - 1 : data.length) {
         let firstIdx = systemRole ? 1 : 0;
         for (let i = firstIdx; i < data.length; i++) {
@@ -1564,6 +1588,7 @@ const initSetting = () => {
         contLen = parseInt(contLenEle.value);
         contLenWrap.textContent = contLen;
         localStorage.setItem("contLength", contLenEle.value);
+        updateMask(contLen);
     }
     contLenEle.dispatchEvent(new Event("input"));
     const longEle = document.getElementById("enableLongReply");
@@ -2586,6 +2611,7 @@ clearEle.onclick = () => {
             if (systemRole) {data.length = 1}
             else {data.length = 0}
             chatlog.innerHTML = "";
+            
             updateChatPre();
             updateChats();
         }
