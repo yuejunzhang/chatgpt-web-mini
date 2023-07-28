@@ -16,6 +16,15 @@
     <link rel="apple-touch-icon" href="icon.png" sizes="144x144">
     <title>ChatGPT</title>
     <style>
+        .overlay {
+            position: absolute; /* 绝对定位，相对于父div */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background-color: rgba(255, 255, 255, 0.5); /* 设置遮罩的半透明颜色，这里使用rgba表示颜色和透明度 */
+            z-index: 1; /* 确保遮罩在子元素上方 */
+        }
         .requestBody,
         .response .markdown-body {
             max-width: calc(100% - 88px);
@@ -2545,6 +2554,7 @@
                 </div>
             </div>
             <div class="messages">
+                <div id="Mask" style="position: absolute; top:0;left:0;width: 100%; height: 0px;  background-color:rgba(188, 188, 188, 0.5);; z-index: 1; pointer-events: none; "></div>
                 <div id="chatlog"></div>
                 <div id="stopChat"><svg width="24" height="24">
                         <use xlink:href="#stopResIcon" />
