@@ -1722,6 +1722,7 @@ const initSetting = () => {
 };
 initSetting();
 document.getElementById("loadMask").style.display = "none";
+messagesEle.scrollTo(0, messagesEle.scrollHeight);
 const closeEvent = (ev) => {
     if (settingEle.contains(ev.target)) return;
     if (!dialogEle.contains(ev.target)) {
@@ -2391,9 +2392,10 @@ const streamGen = async (long) => {
             if (item.role === "assistant") return {role: item.role, content: item.content};
             else return item;
         })
-        let conversationPrompt = {role: "system", content: "系统消息，非问勿答--现在时间：" + new Date().toLocaleString('zh-CN')};
-         
+        let conversationPrompt = {role: "system", content: "【提示】现在时间:"+ new Date().toLocaleString('zh-CN') +" (在需要时透露时间)"};
+        // dataSlice[0].content+="\n现在时间:"+ new Date().toLocaleString('zh-CN')+" (在需要时透露时间)";
         dataSlice.unshift(conversationPrompt);
+        // PreConnection();
         let headers = {"Content-Type": "application/json"};
         if (customAPIKey) headers["Authorization"] = "Bearer " + customAPIKey;
         const res = await fetch(apiHost + API_URL, {
@@ -2589,6 +2591,7 @@ inputAreaEle.onkeydown = (e) => {
         resetRecRes();
     }
 };
+
 const genFunc = function () {
     clearAutoSendTimer();
     if (!keepListenMic && recing) {
@@ -2625,7 +2628,7 @@ let PreConnected = false; // 等待标志
 async function PreConnection() {// 预连接
     autoVoiceEle = document.getElementById("enableAutoVoice");
     if(autoVoiceEle.checked && !PreConnected){
-        PreConnected = true;
+        // PreConnected = true;
 
         if (!voiceIns || voiceIns instanceof Audio === false) {
             voiceIns = new Audio();
@@ -2642,12 +2645,11 @@ async function PreConnection() {// 预连接
                 autoOnlineVoiceFlag = false;
             };
         };
-        // let bufArray = [];
-        // let connectOK=false;
+
         autoVoiceSocket.onmessage = async (e) => {
             print("onmessage====ok");
             await new Promise((resolve) => setTimeout(resolve, 60000));
-            PreConnected = false;
+
         };
 
     }
