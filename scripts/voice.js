@@ -88,7 +88,14 @@ const textInputEvent = () => {
     inputAreaEle.style.height = "47px";
     inputAreaEle.style.height = inputAreaEle.scrollHeight + "px";
     autoVoiceEle = document.getElementById("enableAutoVoice");
-    // if (!PreConnected) PreConnection();////////////////////////////////////
+    if (!PreConnected) {
+        PreConnection();
+        PreConnected=true;
+        // 延迟30秒后执行一次指定的代码块
+        setTimeout(function() {
+            PreConnected=false;
+        }, 30000);
+    }
 };
 inputAreaEle.oninput = textInputEvent;
 const toggleNavEv = () => {
