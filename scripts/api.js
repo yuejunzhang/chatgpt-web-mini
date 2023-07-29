@@ -2647,9 +2647,7 @@ async function PreConnection() {// 预连接
         };
 
         autoVoiceSocket.onmessage = async (e) => {
-            print("onmessage====ok");
-            await new Promise((resolve) => setTimeout(resolve, 60000));
-
+            return;
         };
 
     }
