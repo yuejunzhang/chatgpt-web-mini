@@ -2363,9 +2363,10 @@ const streamGen = async (long) => {
         currentResEle = chatlog.children[systemRole ? refreshIdx - 1 : refreshIdx];
     } else if (!currentResEle) {
         currentResEle = createConvEle("response", true, modelVersion);
-        currentResEle.children[1].innerHTML = "<p class='cursorCls'><br /></p>";
+        currentResEle.children[1].innerHTML = "<p class='cursorCls'><br /> </p>"; 
         currentResEle.dataset.loading = true;
-        scrollToBottom();
+        // scrollToBottom();
+        messagesEle.scrollTo(0, messagesEle.scrollHeight);
     }
     let idx = isRefresh ? refreshIdx : data.length;
     if (existVoice && enableAutoVoice && !long) {
@@ -2392,7 +2393,7 @@ const streamGen = async (long) => {
             if (item.role === "assistant") return {role: item.role, content: item.content};
             else return item;
         })
-        let conversationPrompt = {role: "system", content: "【提示】现在时间:"+ new Date().toLocaleString('zh-CN') +" (在需要时透露时间)"};
+        let conversationPrompt = {role: "system", content: "非问勿答，现在时间:"+ new Date().toLocaleString('zh-CN') };
         // dataSlice[0].content+="\n现在时间:"+ new Date().toLocaleString('zh-CN')+" (在需要时透露时间)";
         dataSlice.unshift(conversationPrompt);
         // PreConnection();
@@ -2647,7 +2648,9 @@ async function PreConnection() {// 预连接
         };
 
         autoVoiceSocket.onmessage = async (e) => {
+
             return;
+
         };
 
     }
