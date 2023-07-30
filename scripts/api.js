@@ -2625,12 +2625,12 @@ clearEle.onclick = () => {
 }
 ////////////////////////////////
 let PreConnected = false; // 等待标志
-
 async function PreConnection() {// 预连接
     autoVoiceEle = document.getElementById("enableAutoVoice");
-    if(autoVoiceEle.checked && !PreConnected){
+    if(existVoice >= 2 && autoVoiceEle.checked && !PreConnected ){
         // PreConnected = true;
-
+        if (voiceIns && !voiceIns.paused) return; 
+        if (autoVoiceSocket && autoVoiceSocket.speaking) return; 
         if (!voiceIns || voiceIns instanceof Audio === false) {
             voiceIns = new Audio();
             voiceIns.onpause = pauseEv;
