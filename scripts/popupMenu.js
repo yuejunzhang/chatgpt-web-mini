@@ -34,8 +34,6 @@
         // 监听文本选择事件
         document.addEventListener('touchend', function (event) {
             selectedText=getSelectedText() ;
-            // var parentElement = document.getElementById('chatlog');
-            // // 检查目标元素是否是父元素的后代
             const isDescendant = parentElement.contains(event.target);
             if (selectedText && isDescendant) {
                 var target = event.target;
@@ -50,16 +48,11 @@
         // 监听文本选择事件
         document.addEventListener('mouseup', function (event) {
             selectedText=getSelectedText() ;
-            if(selectedText==""){
-                hideCustomMenu();
-                return;}
-            // var parentElement = document.getElementById('chatlog');
-            // // 检查目标元素是否是父元素的后代
-            // const isDescendant = parentElement.contains(target);
-            if (selectedText) {
+            const isDescendant = parentElement.contains(event.target);
+            if (selectedText && isDescendant) {
                 var target = event.target;
                 showCustomMenu(event.pageX, event.pageY+10);
-                appendMssageText=target.innerText;
+                appendMssageText=target.textContent;
             } else {
                 hideCustomMenu();
             }
@@ -67,9 +60,9 @@
     }
     /////////////////////////////////////////////////////////////////
         // 阻止默认右键菜单事件
-        document.addEventListener('contextmenu', function (event) {
-            event.preventDefault();
-        });
+        // document.addEventListener('contextmenu', function (event) {
+        //     event.preventDefault();
+        // });
     
         // 获取选择的文本内容
         function getSelectedText() {
