@@ -32,7 +32,7 @@
         
     if(isMobile){
         // 监听文本选择事件
-        parentElement.addEventListener('touchmove', function (event) {
+        parentElement.addEventListener('touchend', function (event) {
             selectedText=getSelectedText() ;
             // const isDescendant = parentElement.contains(event.target);
             if (selectedText ) {
