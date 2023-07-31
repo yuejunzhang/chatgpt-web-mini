@@ -1,23 +1,52 @@
         // 获取自定义菜单元素
         var customMenu = document.getElementById('custom-menu');
         var appendMssageText=""
-        // 监听文本选择事件
-        document.addEventListener('mouseup', function (event) {
-            if(getSelectedText()==""){
+     // 获取文本选择改变时的回调函数
+     function handleSelectionChange(event) {
+        const selectedText = window.getSelection().toString();
+            if(selectedText==""){
                 hideCustomMenu();
                 return;}
-            var target = event.target;
+            var target =  focusedElement = window.getSelection().focusNode;
             var parentElement = document.getElementById('chatlog');
             // 检查目标元素是否是父元素的后代
             const isDescendant = parentElement.contains(target);
             if (isDescendant) {
                 showCustomMenu(event.pageX, event.pageY+10);
-                appendMssageText=target.innerText;
+                appendMssageText=target.textContent;
             } else {
                 hideCustomMenu();
             }
+      }
+  
+      // 添加selectionchange事件监听器
+      document.addEventListener('selectionchange', handleSelectionChange);
+         
+        
+        
+        
+        
+        
+        
+        
 
-        });
+        // 监听文本选择事件
+        // document.addEventListener('mouseup', function (event) {
+        //     if(getSelectedText()==""){
+        //         hideCustomMenu();
+        //         return;}
+        //     var target = event.target;
+        //     var parentElement = document.getElementById('chatlog');
+        //     // 检查目标元素是否是父元素的后代
+        //     const isDescendant = parentElement.contains(target);
+        //     if (isDescendant) {
+        //         showCustomMenu(event.pageX, event.pageY+10);
+        //         appendMssageText=target.innerText;
+        //     } else {
+        //         hideCustomMenu();
+        //     }
+
+        // });
     
         // 阻止默认右键菜单事件
         document.addEventListener('contextmenu', function (event) {
