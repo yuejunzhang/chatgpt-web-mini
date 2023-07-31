@@ -1,8 +1,9 @@
         // 获取自定义菜单元素
+        var parentElement = document.getElementById('chatlog');
         var customMenu = document.getElementById('custom-menu');
         var appendMssageText="";
         var selectedText="";
-        var parentElement = document.getElementById('chatlog');
+
     //  // 获取文本选择改变时的回调函数
     //  function handleSelectionChange(event) {
     //     const selectedText = window.getSelection().toString();
@@ -35,7 +36,7 @@
             selectedText=getSelectedText() ;
             // var parentElement = document.getElementById('chatlog');
             // // 检查目标元素是否是父元素的后代
-            const isDescendant = parentElement.contains( event.target;);
+            const isDescendant = parentElement.contains(event.target);
             if (selectedText && isDescendant) {
                 var target = event.target;
                 showCustomMenu(event.changedTouches[0].pageX, event.changedTouches[0].pageY+10);
