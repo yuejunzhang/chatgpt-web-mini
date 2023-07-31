@@ -32,10 +32,10 @@
         
     if(isMobile){
         // 监听文本选择事件
-        parentElement.addEventListener('touchend', function (event) {
+        document.addEventListener('touchend', function (event) {
             selectedText=getSelectedText() ;
-            // const isDescendant = parentElement.contains(event.target);
-            if (selectedText ) {
+            const isDescendant = parentElement.contains(event.target);
+            if (selectedText  && isDescendant) {
                 var target = event.target;
                 showCustomMenu(event.changedTouches[0].pageX, event.changedTouches[0].pageY+10);
                 appendMssageText=target.textContent;
@@ -83,7 +83,7 @@
     
         // 自定义菜单选项 - 追问详解
         function askForExplanation() {
-             selectedText = getSelectedText();
+             // selectedText = getSelectedText();
             
             // 在这里实现追问详解的逻辑，这里简化为在控制台输出选中文本
 
@@ -101,7 +101,7 @@
     
         // 自定义菜单选项 - 复制文本
         function copyText() {
-             selectedText = getSelectedText();
+             // selectedText = getSelectedText();
 
             // 创建一个隐藏的textarea元素
             var textarea = document.createElement('textarea');
@@ -127,7 +127,7 @@
     
         // 自定义菜单选项 - 百度搜索
         function searchOnBaidu() {
-            selectedText = getSelectedText();
+            // selectedText = getSelectedText();
             // 使用encodeURIComponent对文本进行编码，以便在URL中传递
             var encodedText = encodeURIComponent(selectedText);
             // 构造百度搜索链接
