@@ -60,9 +60,9 @@
     }
     /////////////////////////////////////////////////////////////////
         // 阻止默认右键菜单事件
-        // document.addEventListener('contextmenu', function (event) {
-        //     event.preventDefault();
-        // });
+        parentElement.addEventListener('contextmenu', function (event) {
+            event.preventDefault();
+        });
     
         // 获取选择的文本内容
         function getSelectedText() {
