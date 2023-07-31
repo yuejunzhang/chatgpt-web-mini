@@ -38,7 +38,7 @@
             if (selectedText ) {
                 var target = event.target;
                 showCustomMenu(event.changedTouches[0].pageX, event.changedTouches[0].pageY+10);
-                appendMssageText=target.innerText;
+                appendMssageText=target.textContent;
             } else {
                 hideCustomMenu();
             }
