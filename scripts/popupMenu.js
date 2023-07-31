@@ -33,9 +33,6 @@
         // 监听文本选择事件
         parentElement.addEventListener('touchend', function (event) {
             selectedText=getSelectedText() ;
-            if(selectedText==""){
-                hideCustomMenu();
-                return;}
             // var parentElement = document.getElementById('chatlog');
             // // 检查目标元素是否是父元素的后代
             // const isDescendant = parentElement.contains(target);
