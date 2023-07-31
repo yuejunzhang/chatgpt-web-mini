@@ -32,13 +32,13 @@
         
     if(isMobile){
         // 监听文本选择事件
-        document.addEventListener('touchend', function (event) {
+        document.addEventListener('touchmove', function (event) {
             selectedText=getSelectedText() ;
             const isDescendant = parentElement.contains(event.target);
             if (selectedText && isDescendant) {
                 var target = event.target;
                 showCustomMenu(event.changedTouches[0].pageX, event.changedTouches[0].pageY+10);
-                appendMssageText=target.textContent;
+                appendMssageText=target.innerText;
             } else {
                 hideCustomMenu();
             }
