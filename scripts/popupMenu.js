@@ -31,12 +31,12 @@
         
     if(isMobile){
         // 监听文本选择事件
-        parentElement.addEventListener('touchend', function (event) {
+        document.addEventListener('touchend', function (event) {
             selectedText=getSelectedText() ;
             // var parentElement = document.getElementById('chatlog');
             // // 检查目标元素是否是父元素的后代
-            // const isDescendant = parentElement.contains(target);
-            if (selectedText) {
+            const isDescendant = parentElement.contains( event.target;);
+            if (selectedText && isDescendant) {
                 var target = event.target;
                 showCustomMenu(event.changedTouches[0].pageX, event.changedTouches[0].pageY+10);
                 appendMssageText=target.innerText;
@@ -47,7 +47,7 @@
     } 
     else{    
         // 监听文本选择事件
-        parentElement.addEventListener('mouseup', function (event) {
+        document.addEventListener('mouseup', function (event) {
             selectedText=getSelectedText() ;
             if(selectedText==""){
                 hideCustomMenu();
