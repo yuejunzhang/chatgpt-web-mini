@@ -3,7 +3,9 @@
         var appendMssageText=""
         // 监听文本选择事件
         document.addEventListener('mouseup', function (event) {
-                if(getSelectedText()=="")return;
+            if(getSelectedText()==""){
+                hideCustomMenu();
+                return;}
             var target = event.target;
             var parentElement = document.getElementById('chatlog');
             // 检查目标元素是否是父元素的后代
