@@ -2237,7 +2237,7 @@ const autoSpeechEvent = (content, ele, force = false, end = false) => {
         };
         let bufArray = [];
         autoVoiceSocket.onmessage = (e) => {
-            // if (awaken) return;////////////////////////////观察有无内存溢出情况，因为没有销毁创建的对象
+           
             if (e.data instanceof ArrayBuffer) {
                 (supportMSE ? speechQuene : bufArray).push(e.data.slice(130));
             } else {
@@ -2352,7 +2352,7 @@ let controllerId;
 let refreshIdx;
 let currentResEle;
 let progressData = "";
-const streamGen = async (long) => {
+const streamGen = async (long,append) => {
     controller = new AbortController();
     controllerId = setTimeout(() => {
         notyf.error(translations[locale]["timeoutTip"]);
@@ -2379,20 +2379,27 @@ const streamGen = async (long) => {
         }
     };
     try {
-        let dataSlice;
-        if (long) {
-            idx = isRefresh ? refreshIdx : data.length - 1;
-            dataSlice = [data[idx - 1], data[idx]];
-            if (systemRole) dataSlice.unshift(data[0]);
-        } else {
-            let startIdx = idx > contLen ? idx - contLen - 1 : 0;
-            dataSlice = data.slice(startIdx, idx);
-            if (systemRole && startIdx > 0) dataSlice.unshift(data[0]);
+        let dataSlice=[];
+        if(!append){
+            if (long) {
+                idx = isRefresh ? refreshIdx : data.length - 1;
+                dataSlice = [data[idx - 1], data[idx]];
+                if (systemRole) dataSlice.unshift(data[0]);
+            } else {
+                let startIdx = idx > contLen ? idx - contLen - 1 : 0;
+                dataSlice = data.slice(startIdx, idx);
+                if (systemRole && startIdx > 0) dataSlice.unshift(data[0]);
+            }
+            dataSlice = dataSlice.map(item => {
+                if (item.role === "assistant") return {role: item.role, content: item.content};
+                else return item;
+            })
         }
-        dataSlice = dataSlice.map(item => {
-            if (item.role === "assistant") return {role: item.role, content: item.content};
-            else return item;
-        })
+        else{ //进行一次追问    
+            let appendMsg = {role: "system", content: append };
+            dataSlice.push(appendMsg);
+        }
+        
         let conversationPrompt = {role: "system", content: "非问勿答，现在时间:"+ new Date().toLocaleString('zh-CN') };
         // dataSlice[0].content+="\n现在时间:"+ new Date().toLocaleString('zh-CN')+" (在需要时透露时间)";
         dataSlice.unshift(conversationPrompt);
@@ -2457,7 +2464,7 @@ const streamGen = async (long) => {
                                 }
                                 break;
                             } else {
-                                let content = payload.choices[0].delta.content;
+                                let content = payload.choices[0].delta.content;////////////////////
                                 let spliter;
                                 if (content) {
                                     if (!progressData && !content.trim()) continue;
@@ -2625,6 +2632,7 @@ clearEle.onclick = () => {
 }
 ////////////////////////////////
 let PreConnected = false; // 等待标志
+
 async function PreConnection() {// 预连接
     autoVoiceEle = document.getElementById("enableAutoVoice");
     if(existVoice >= 2 && autoVoiceEle.checked && !PreConnected ){
