@@ -53,7 +53,6 @@
     if(isMobile){
         // 监听文本选择事件
         document.addEventListener('touchend', function (event) {
-            event.preventDefault();
             selectedText=getSelectedText() ;
             var target = event.target;
             // 检查目标元素是否是父元素的后代
