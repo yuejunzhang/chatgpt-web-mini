@@ -68,7 +68,7 @@
         var longPressTimer;
 
         // 添加触摸开始事件
-        parentElement.addEventListener("touchstart", function(event) {
+        document.addEventListener("touchstart", function(event) {
             hideCustomMenu();
           longPressTimer = setTimeout(function() {
             selectedText=getSelectedText() ;
