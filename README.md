@@ -9,7 +9,7 @@ Pure Javascript ChatGPT demo based on OpenAI API
 
 支持搜索会话，深色模式，自定义头像，快捷键，多语言，[环境变量](#环境变量)，[PWA应用](#pwa应用)，API额度显示等。
 
-支持[加密HTML文件](#加密html文件)。
+
 
 参考项目: 
 [markdown-it](https://github.com/markdown-it/markdown-it), 
@@ -112,18 +112,12 @@ envAPIEndpoint="https://api.openai.com/"
 envAPIKey="sk-your-token"
 ```
 
-## PWA应用
-部署文件[icon.png](https://raw.githubusercontent.com/xqdoo00o/chatgpt-web/main/icon.png)，[manifest.json](https://raw.githubusercontent.com/xqdoo00o/chatgpt-web/main/manifest.json)，[sw.js](https://raw.githubusercontent.com/xqdoo00o/chatgpt-web/main/sw.js)到index.html同目录下，即可支持PWA应用。
-
-**注意：如果重命名index.html使用，则sw.js文件中`./index.html`也需修改。**
-
-**部署PWA应用后，更新html文件需同步更新sw.js，不然无法更新成功。**
 
 ## 自定义选项
 
 - 左边栏支持，搜索会话，新建/重命名/删除(会话/文件夹)，中英双语，浅色/深色/自动主题模式，导出/导入/重置会话和设置数据，快捷键，显示API额度，显示本地存储。
 
-- 可选GPT模型，默认gpt-3.5，当前使用gpt-4模型需通过OpenAI的表单申请，或使用[ChatGPT-to-API](https://github.com/xqdoo00o/ChatGPT-to-API)模拟网页ChatGPT为API使用（使用gpt-4需Plus账户）。
+- 可选GPT模型，默认gpt-3.5，当前使用gpt-4模型需通过OpenAI的表单申请。
 
 - 可选OpenAI接口地址，使用nginx或caddy部署反代后可以不设置。
 
@@ -165,20 +159,6 @@ envAPIKey="sk-your-token"
 
 - 保持监听，默认关闭，保持麦克风一直处于监听状态，除非识别报错或手动关闭识别。
 
-## 加密HTML文件
 
-使用[加密网页](https://xqdoo00o.github.io/chatgpt-web/encrypt.html)可加密index.html文件。
-
-- 密码，打开加密HTML的密码。
-
-- 是否压缩，默认允许，较大HTML可减少加密后文件体积。
-
-- 允许记住密码，默认允许，是否允许前端记住密码。
-
-- 记住密码有效期，默认永不过期，过期后需重新输入密码。
-
-- 拷贝index.html内容到要加密的HTML文本框，点击生成按钮后，即可下载加密HTML，并替换index.html使用。
-
-**注意：该方式仅加密前端HTML，不加密OpenAI反代接口。**
 
 **可取消OpenAI反代接口的默认API密钥，打开[index.html代码](https://github.com/xqdoo00o/chatgpt-web/blob/main/index.html#L2687)，此行结尾添加代码`value="sk-xxx"`，则默认使用该密钥**
