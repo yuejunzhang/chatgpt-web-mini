@@ -59,8 +59,9 @@
             const isDescendant = parentElement.contains(target);
             if (selectedText && isDescendant) {
                 // showCustomMenu(event.pageX, event.pageY+10);
+                event.stopPropagation();  
                 showCustomMenu(event.changedTouches[0].pageX, event.changedTouches[0].pageY+10);
-                event.stopPropagation();    
+                  
                 appendMssageText=target.innerText;
             } else {
                 hideCustomMenu();
