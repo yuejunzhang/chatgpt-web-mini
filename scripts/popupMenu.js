@@ -1,21 +1,26 @@
         // 获取自定义菜单元素
-        var parentElement = document.getElementById('chatlog');
-        var customMenu = document.getElementById('custom-menu');
-        var appendMssageText="";
-        var selectedText="";
+    var customMenu = document.getElementById('custom-menu');
+    var parentElement = document.getElementById('chatlog');
+    var appendMssageText="";
+    var selectedText="";
+    var Menu_X,Menu_Y;
 
-    //  // 获取文本选择改变时的回调函数
+
+    // 添加selectionchange事件监听器
+    // document.addEventListener('selectionchange', handleSelectionChange);
+    // //  // 获取文本选择改变时的回调函数
     //  function handleSelectionChange(event) {
-    //     const selectedText = window.getSelection().toString();
+    //     selectedText = window.getSelection().toString();
     //         if(selectedText==""){
     //             hideCustomMenu();
     //             return;}
     //         var target =   window.getSelection().focusNode;
-    //         var parentElement = document.getElementById('chatlog');
     //         // 检查目标元素是否是父元素的后代
     //         const isDescendant = parentElement.contains(target);
     //         if (isDescendant) {
-    //             showCustomMenu(target.pageX, target.pageY+10);
+    //             getCursorPosition(target)
+    //             // showCustomMenu(target.changedTouches[0].pageX, target.changedTouches[0].pageY+10);
+    //             showCustomMenu(Menu_X, Menu_Y);
     //             appendMssageText=target.textContent;
     //         } else {
     //             hideCustomMenu();
@@ -24,21 +29,38 @@
   
  
 
-    //   // 添加selectionchange事件监听器
-    //   document.addEventListener('selectionchange', handleSelectionChange);
  
-        
+
+    //   function getCursorPosition(target) {
+    //     // const cursorPositionTextElement = document.getElementById('cursorPositionText');
+    //     const selection = window.getSelection();
+    //     const range = document.createRange();
+    //     if (selection.rangeCount > 0) {
+    //         range.setStart(target, selection.focusOffset);
+    //         range.collapse(true);
+    //         const rect = range.getClientRects()[0];
+    //         Menu_X = rect.left;
+    //         Menu_Y = rect.top;
+    //         // 以下是光标的位置坐标
+    //         console.log('光标位置 X:', Menu_X);
+    //         console.log('光标位置 Y:', Menu_Y);
+    //     } else {
+    //         console.log('没有获取到光标位置。');
+    //     }
+    // }
      //////////////////////////////////////////////////////////////////////////////   
         
     if(isMobile){
         // 监听文本选择事件
         document.addEventListener('touchend', function (event) {
             selectedText=getSelectedText() ;
-            const isDescendant = parentElement.contains(event.target);
-            if (selectedText  && isDescendant) {
-                var target = event.target;
+            var target = event.target;
+            // 检查目标元素是否是父元素的后代
+            const isDescendant = parentElement.contains(target);
+            if (selectedText && isDescendant) {
+                // showCustomMenu(event.pageX, event.pageY+10);
                 showCustomMenu(event.changedTouches[0].pageX, event.changedTouches[0].pageY+10);
-                appendMssageText=target.textContent;
+                appendMssageText=target.innerText;
             } else {
                 hideCustomMenu();
             }
@@ -48,9 +70,10 @@
         // 监听文本选择事件
         document.addEventListener('mouseup', function (event) {
             selectedText=getSelectedText() ;
-            const isDescendant = parentElement.contains(event.target);
+            var target = event.target;
+            // 检查目标元素是否是父元素的后代
+            const isDescendant = parentElement.contains(target);
             if (selectedText && isDescendant) {
-                var target = event.target;
                 showCustomMenu(event.pageX, event.pageY+10);
                 appendMssageText=target.innerText;
             } else {
@@ -83,45 +106,30 @@
     
         // 自定义菜单选项 - 追问详解
         function askForExplanation() {
-             // selectedText = getSelectedText();
-            
-            // 在这里实现追问详解的逻辑，这里简化为在控制台输出选中文本
-
+            //  selectedText = getSelectedText();
             if (selectedText.length !== 0 && noLoading()) {
-
                 selectedText="\n请详细解释其中的以下内容：\n" + selectedText
-                appendMssageText="前文你说道：" + appendMssageText + selectedText
+                appendMssageText="前文是：" + appendMssageText + selectedText
                 streamGen( false, appendMssageText);
                 appendMssageText="";
                 selectedText="";
             }
-
             hideCustomMenu();
         }
     
         // 自定义菜单选项 - 复制文本
         function copyText() {
-             // selectedText = getSelectedText();
-
+            //  selectedText = getSelectedText();
             // 创建一个隐藏的textarea元素
             var textarea = document.createElement('textarea');
             textarea.style.position = 'absolute';
             textarea.style.left = '-9999px';
             textarea.style.top = '-9999px';
             textarea.value = selectedText;
-
-            // 将textarea添加到文档中
             document.body.appendChild(textarea);
-
-            // 选中textarea中的文本
             textarea.select();
-
-            // 复制文本到剪贴板
             document.execCommand('copy');
-
-            // 从文档中移除textarea元素
             document.body.removeChild(textarea);
-
             hideCustomMenu();
         }
     
@@ -130,9 +138,7 @@
             // selectedText = getSelectedText();
             // 使用encodeURIComponent对文本进行编码，以便在URL中传递
             var encodedText = encodeURIComponent(selectedText);
-            // 构造百度搜索链接
             var searchLink = 'https://www.baidu.com/s?wd=' + encodedText;
-            // 在新窗口中打开百度搜索链接
             window.open(searchLink, '_blank');
             hideCustomMenu();
         }
