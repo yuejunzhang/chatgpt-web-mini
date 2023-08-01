@@ -52,24 +52,46 @@
         
     if(isMobile){
         // 监听文本选择事件
-        document.addEventListener('touchend', function (event) {
+        // document.addEventListener('touchend', function (event) {
+        //     selectedText=getSelectedText() ;
+        //     var target = event.target;
+        //     // 检查目标元素是否是父元素的后代
+        //     const isDescendant = parentElement.contains(target);
+        //     if (selectedText && isDescendant) {
+        //         // showCustomMenu(event.pageX, event.pageY+10);
+        //         showCustomMenu(event.changedTouches[0].pageX, event.changedTouches[0].pageY+10);
+        //         appendMssageText=target.innerText;
+        //     } else {
+        //         hideCustomMenu();
+        //     }
+        // });
+        var longPressTimer;
+
+        // 添加触摸开始事件
+        parentElement.addEventListener("touchstart", function(event) {
+          longPressTimer = setTimeout(function() {
             selectedText=getSelectedText() ;
             var target = event.target;
             // 检查目标元素是否是父元素的后代
             const isDescendant = parentElement.contains(target);
             if (selectedText && isDescendant) {
                 // showCustomMenu(event.pageX, event.pageY+10);
-                event.stopPropagation();  
                 showCustomMenu(event.changedTouches[0].pageX, event.changedTouches[0].pageY+10);
-                  
+                event.stopPropagation(); // 阻止事件冒泡
                 appendMssageText=target.innerText;
             } else {
                 hideCustomMenu();
             }
+            console.log("Long press event detected!");
+          }, 1000); // 设置长按持续时间（单位：毫秒）
+        });
+    
+        // 添加触摸结束事件
+        parentElement.addEventListener("touchend", function(event) {
+          clearTimeout(longPressTimer); // 清除计时器
         });
 
         const menuUpEvent = (event) => {
-            // ev.preventDefault();
             var target = event.target;
             if (target == document.querySelector("#menu_appendAsk")){askForExplanation();}
             if (target == document.querySelector("#menu_copy")){copyText();}
