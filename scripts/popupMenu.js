@@ -9,7 +9,6 @@
     if(isMobile){
         // 监听文本选择事件
         document.addEventListener('touchend', function (event) {
-                event.preventDefault();
             selectedText=getSelectedText() ;
             var target = event.target;
             // 检查目标元素是否是父元素的后代
@@ -76,6 +75,7 @@
     
         // 自定义菜单选项 - 复制文本
         function copyText() {
+                alert(selectedText);
             //  selectedText = getSelectedText();
             // 创建一个隐藏的textarea元素
             var textarea = document.createElement('textarea');
