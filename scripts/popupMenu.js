@@ -3,52 +3,8 @@
     var parentElement = document.getElementById('chatlog');
     var appendMssageText="";
     var selectedText="";
-    var Menu_X,Menu_Y;
-
-
-    // 添加selectionchange事件监听器
-    // document.addEventListener('selectionchange', handleSelectionChange);
-    // //  // 获取文本选择改变时的回调函数
-    //  function handleSelectionChange(event) {
-    //     selectedText = window.getSelection().toString();
-    //         if(selectedText==""){
-    //             hideCustomMenu();
-    //             return;}
-    //         var target =   window.getSelection().focusNode;
-    //         // 检查目标元素是否是父元素的后代
-    //         const isDescendant = parentElement.contains(target);
-    //         if (isDescendant) {
-    //             getCursorPosition(target)
-    //             // showCustomMenu(target.changedTouches[0].pageX, target.changedTouches[0].pageY+10);
-    //             showCustomMenu(Menu_X, Menu_Y);
-    //             appendMssageText=target.textContent;
-    //         } else {
-    //             hideCustomMenu();
-    //         }
-    //   }
+ 
   
- 
-
- 
-
-    //   function getCursorPosition(target) {
-    //     // const cursorPositionTextElement = document.getElementById('cursorPositionText');
-    //     const selection = window.getSelection();
-    //     const range = document.createRange();
-    //     if (selection.rangeCount > 0) {
-    //         range.setStart(target, selection.focusOffset);
-    //         range.collapse(true);
-    //         const rect = range.getClientRects()[0];
-    //         Menu_X = rect.left;
-    //         Menu_Y = rect.top;
-    //         // 以下是光标的位置坐标
-    //         console.log('光标位置 X:', Menu_X);
-    //         console.log('光标位置 Y:', Menu_Y);
-    //     } else {
-    //         console.log('没有获取到光标位置。');
-    //     }
-    // }
-     //////////////////////////////////////////////////////////////////////////////   
         
     if(isMobile){
         // 监听文本选择事件
@@ -61,6 +17,7 @@
                 // showCustomMenu(event.pageX, event.pageY+10);
                 showCustomMenu(event.changedTouches[0].pageX, event.changedTouches[0].pageY+10);
                 appendMssageText=target.innerText;
+                alert(selectedText);
             } else {
                 hideCustomMenu();
             }
