@@ -69,6 +69,7 @@
 
         // 添加触摸开始事件
         parentElement.addEventListener("touchstart", function(event) {
+            hideCustomMenu();
           longPressTimer = setTimeout(function() {
             selectedText=getSelectedText() ;
             var target = event.target;
@@ -142,7 +143,7 @@
     
         // 自定义菜单选项 - 追问详解
         function askForExplanation() {
-            //  selectedText = getSelectedText();
+             selectedText = getSelectedText();
             if (selectedText.length !== 0 && noLoading()) {
                 selectedText="\n请详细解释其中的以下内容：\n" + selectedText
                 appendMssageText="前文是：" + appendMssageText + selectedText
@@ -155,7 +156,7 @@
     
         // 自定义菜单选项 - 复制文本
         function copyText() {
-            //  selectedText = getSelectedText();
+             selectedText = getSelectedText();
             // 创建一个隐藏的textarea元素
             var textarea = document.createElement('textarea');
             textarea.style.position = 'absolute';
@@ -171,7 +172,7 @@
     
         // 自定义菜单选项 - 百度搜索
         function searchOnBaidu() {
-            // selectedText = getSelectedText();
+            selectedText = getSelectedText();
             // 使用encodeURIComponent对文本进行编码，以便在URL中传递
             var encodedText = encodeURIComponent(selectedText);
             var searchLink = 'https://www.baidu.com/s?wd=' + encodedText;
