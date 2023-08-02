@@ -402,7 +402,7 @@ const formatMdEle = (ele, model) => {
     // logwidth=document.getElementById('chatlog').clientWidth;
     let optionWidth = existVoice >= 2 ? 140 : 105;
     // logwidth=logwidth/2-10;
-    mdOption.innerHTML += `<div class="optionItems" style="width:${optionWidth}px;left:-${optionWidth+50}px">`
+    mdOption.innerHTML += `<div class="optionItems" style="width:${optionWidth}px;left:-${optionWidth/2}px">`
         + (ele.className === "request" ? `<div data-id="editMd" class="optionItem" title="${translations[locale]["edit"]}">
         <svg width="18" height="18"><use xlink:href="#chatEditIcon" /></svg>
         </div>` : `<div data-id="refreshMd" class="refreshReq optionItem" title="${translations[locale]["refresh"]}">
