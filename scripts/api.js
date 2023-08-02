@@ -1552,7 +1552,7 @@ const initSetting = () => {
         styleSheet.deleteRule(0);
         styleSheet.deleteRule(0);
         styleSheet.insertRule(`.bottom_wrapper{max-width:${convWidth[type]}%;}`, 0);
-        styleSheet.insertRule(`.requestBody,.response .markdown-body{max-width:calc(${convWidth[type]}% - 88px);}`, 0);
+        styleSheet.insertRule(`.requestBody,.response .markdown-body{max-width:calc(${convWidth[type]}% - 75px);}`, 0);////////////////////////////
     }
     const setConvValue = () => {
         let type = isFull ? 1 : 0;
