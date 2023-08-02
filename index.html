@@ -55,6 +55,7 @@
             --btn-color: #404040;
             --text-color: #909090;
             --chat-text-color: #24292f;
+            --requset-color: #c2c2c2;
             --response-color: #f7f7f8;
             --lighter-active-color: #e8e8e8;
             --lighter-text-color: #555;
@@ -74,6 +75,7 @@
             --btn-color: #bfbfbf;
             --text-color: #8f8f8f;
             --chat-text-color: #c9d1d9;
+            --requset-color: #4b4b4b;
             --response-color: #2f2f2f;
             --lighter-active-color: #171717;
             --lighter-text-color: #aaa;
@@ -429,9 +431,12 @@
         }
 
         .requestBody {
+            /* background: var(--requset-color); */
             white-space: pre-wrap;
             margin: 18px 0;
             flex: 1;
+            text-align: right;
+            /* border-radius: 15px;  */
         }
 
         #chatlog .response {
@@ -439,6 +444,7 @@
             position: relative;
             display: flex;
             justify-content: center;
+            /* border-radius: 15px;  */
         }
 
         .response .markdown-body {
@@ -931,7 +937,7 @@
         .mdOption {
             flex-shrink: 0;
             position: relative;
-            width: 30px;
+            width: 1px;
             pointer-events: none;
         }
 
