@@ -391,7 +391,7 @@
         }
 
         .chatAvatar {
-            margin: 14px 14px 13px 13px;
+            margin: 14px 5px 13px 5px;
             width: 30px;
             height: 30px;
             flex-shrink: 0;
@@ -427,7 +427,7 @@
         #chatlog .request {
             position: relative;
             display: flex;
-            justify-content: center;
+            justify-content: flex-end;
         }
 
         .requestBody {
@@ -443,7 +443,7 @@
             background: var(--response-color);
             position: relative;
             display: flex;
-            justify-content: center;
+            justify-content: flex-star; 
             /* border-radius: 15px;  */
         }
 
@@ -936,9 +936,14 @@
 
         .mdOption {
             flex-shrink: 0;
-            position: relative;
+            position: absolute; /* 将元素从正常文档流中脱离 */
+            top: 100%; /* 将元素的顶部定位在容器的中间 */
+            left: 50%; /* 将元素的左边定位在容器的中间 */
+            transform: translate(-100%, -50%); 
+            /* position: relative; */
             width: 1px;
             pointer-events: none;
+            z-index: 10;
         }
 
         .mdOption>div {
