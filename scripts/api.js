@@ -380,18 +380,29 @@ const mdOptionEvent = function (ev) {
 }
 const formatMdEle = (ele, model) => {
     let avatar = document.createElement("div");
-    avatar.className = "chatAvatar";
-    if (ele.className === "response") avatar.classList.add((model && model.startsWith("gpt-4")) ? "gpt4Avatar" : "gpt3Avatar");
-    avatar.innerHTML = ele.className === "request" ? `<img src="${userAvatar}" />` : `<svg width="22" height="22"><use xlink:href="#aiIcon"></use></svg>`;
-    ele.appendChild(avatar);
+        avatar.className = "chatAvatar";
     let realMd = document.createElement("div");
-    realMd.className = ele.className === "request" ? "requestBody" : "markdown-body";
-    ele.appendChild(realMd);
+    if (ele.className === "response") {
+        avatar.classList.add((model && model.startsWith("gpt-4")) ? "gpt4Avatar" : "gpt3Avatar");
+        avatar.innerHTML =  `<svg width="22" height="22"><use xlink:href="#aiIcon"></use></svg>`;
+        ele.appendChild(avatar);
+        realMd.className =  "markdown-body";
+        ele.appendChild(realMd);
+    }
+    if (ele.className === "request") {
+        realMd.className =  "requestBody";
+        ele.appendChild(realMd);
+        avatar.innerHTML = `<img src="${userAvatar}"/>`;
+        ele.appendChild(avatar);
+    }
+
     let mdOption = document.createElement("div");
     mdOption.className = "mdOption";
     ele.appendChild(mdOption);
+    // logwidth=document.getElementById('chatlog').clientWidth;
     let optionWidth = existVoice >= 2 ? 140 : 105;
-    mdOption.innerHTML += `<div class="optionItems" style="width:${optionWidth}px;left:-${optionWidth - 10}px">`
+    // logwidth=logwidth/2-10;
+    mdOption.innerHTML += `<div class="optionItems" style="width:${optionWidth}px;left:-${optionWidth+50}px">`
         + (ele.className === "request" ? `<div data-id="editMd" class="optionItem" title="${translations[locale]["edit"]}">
         <svg width="18" height="18"><use xlink:href="#chatEditIcon" /></svg>
         </div>` : `<div data-id="refreshMd" class="refreshReq optionItem" title="${translations[locale]["refresh"]}">
@@ -399,20 +410,26 @@ const formatMdEle = (ele, model) => {
         <svg width="16" height="16" ><use xlink:href="#halfRefIcon" /></svg>
         </div>`) +
         `<div data-id="copyMd" class="optionItem" title="${translations[locale]["copy"]}">
-        <svg width="20" height="20"><use xlink:href="#copyIcon" /></svg>
-    </div>
-    <div data-id="delMd" class="optionItem" title="${translations[locale]["del"]}">
-        <svg width="20" height="20"><use xlink:href="#delIcon" /></svg>
-    </div>` + (existVoice >= 2 ? `<div data-id="downAudioMd" class="optionItem" title="${translations[locale]["downAudio"]}">
-        <svg width="20" height="20"><use xlink:href="#downAudioIcon" /></svg>
-    </div>` : "") + `</div>`;
-    if (existVoice) {
-        mdOption.innerHTML += `<div class="voiceCls readyVoice" data-id="voiceBtn">
+        <svg width="20" height="20"><use xlink:href="#copyIcon" /></svg></div>
+        <div data-id="delMd" class="optionItem" title="${translations[locale]["del"]}">
+        <svg width="20" height="20"><use xlink:href="#delIcon" /></svg></div>` + 
+    (existVoice >= 2 ? 
+        `<div data-id="downAudioMd" class="optionItem" title="${translations[locale]["downAudio"]}">
+        <svg width="20" height="20"><use xlink:href="#downAudioIcon" /></svg></div>` : "") +
+    (existVoice ?
+        `<div class="optionItem readyVoice" data-id="voiceBtn">
         <svg width="20" height="20" role="img" data-id="speechMd"><title>${translations[locale]["speech"]}</title><use xlink:href="#readyVoiceIcon" /></svg>
         <svg width="20" height="20" role="img" data-id="pauseMd"><title>${translations[locale]["pause"]}</title><use xlink:href="#pauseVoiceIcon" /></svg>
         <svg width="20" height="20" role="img" data-id="resumeMd"><title>${translations[locale]["resume"]}</title><use xlink:href="#resumeVoiceIcon" /></svg>
-        </div>`
-    }
+        </div>`:"")+`</div>` 
+    // if (existVoice) {
+    //     mdOption.innerHTML += `<div class="voiceCls readyVoice" data-id="voiceBtn">
+    //     <svg width="20" height="20" role="img" data-id="speechMd"><title>${translations[locale]["speech"]}</title><use xlink:href="#readyVoiceIcon" /></svg>
+    //     <svg width="20" height="20" role="img" data-id="pauseMd"><title>${translations[locale]["pause"]}</title><use xlink:href="#pauseVoiceIcon" /></svg>
+    //     <svg width="20" height="20" role="img" data-id="resumeMd"><title>${translations[locale]["resume"]}</title><use xlink:href="#resumeVoiceIcon" /></svg>
+    //     </div>`
+    // }
+ 
     mdOption.onclick = mdOptionEvent;
 }
 let allListEle = chatListEle.parentElement;
@@ -957,7 +974,7 @@ const activeChat = (ele) => {
         let firstIdx = systemRole ? 1 : 0;
         for (let i = firstIdx; i < data.length; i++) {
             if (data[i].role === "user") {
-                createConvEle("request").children[1].textContent = data[i].content;
+                createConvEle("request").children[0].textContent = data[i].content;
             } else {
                 createConvEle("response", true, data[i].model).children[1].innerHTML = md.render(data[i].content) || "<br />";
             }
@@ -1787,7 +1804,7 @@ const edgeTTSURL = "wss://speech.platform.bing.com/consumer/speech/synthesize/re
 const resetSpeakIcon = () => {
     if (currentVoiceIdx !== void 0) {
         chatlog.children[systemRole ? currentVoiceIdx - 1 : currentVoiceIdx].classList.remove("showVoiceCls");
-        chatlog.children[systemRole ? currentVoiceIdx - 1 : currentVoiceIdx].lastChild.lastChild.className = "voiceCls readyVoice";
+        chatlog.children[systemRole ? currentVoiceIdx - 1 : currentVoiceIdx].querySelector('.optionItems').lastChild.className = "optionItem readyVoice";
     }
 }
 const endSpeak = () => {
@@ -2075,7 +2092,7 @@ const NoMSEPending = (key) => {
 }
 const pauseEv = () => {
     if (voiceIns.src) {
-        let ele = chatlog.children[systemRole ? currentVoiceIdx - 1 : currentVoiceIdx].lastChild.lastChild;
+        let ele = chatlog.children[systemRole ? currentVoiceIdx - 1 : currentVoiceIdx].querySelector('.optionItems').lastChild;
         ele.classList.remove("readyVoice");
         ele.classList.remove("pauseVoice");
         ele.classList.add("resumeVoice");
@@ -2083,7 +2100,7 @@ const pauseEv = () => {
 }
 const resumeEv = () => {
     if (voiceIns.src) {
-        let ele = chatlog.children[systemRole ? currentVoiceIdx - 1 : currentVoiceIdx].lastChild.lastChild;
+        let ele = chatlog.children[systemRole ? currentVoiceIdx - 1 : currentVoiceIdx].querySelector('.optionItems').lastChild;
         ele.classList.remove("readyVoice");
         ele.classList.remove("resumeVoice");
         ele.classList.add("pauseVoice");
@@ -2099,8 +2116,8 @@ const speechEvent = async (idx) => {
     };
     let type = data[idx].role === "user" ? 0 : 1;
     chatlog.children[systemRole ? idx - 1 : idx].classList.add("showVoiceCls");
-    let voiceIconEle = chatlog.children[systemRole ? idx - 1 : idx].lastChild.lastChild;
-    voiceIconEle.className = "voiceCls pauseVoice";
+    let voiceIconEle = chatlog.children[systemRole ? idx - 1 : idx].querySelector('.optionItems').lastChild;
+    voiceIconEle.className = "optionItem pauseVoice";
     let content = data[idx].content;
     let volume = voiceVolume[type];
     let rate = voiceRate[type];
@@ -2213,9 +2230,9 @@ const autoAddQuene = () => {
     }
 }
 const autoSpeechEvent = (content, ele, force = false, end = false) => {
-    if (ele.lastChild.lastChild.classList.contains("readyVoice")) {
+    if (ele.querySelector('.optionItems').lastChild.classList.contains("readyVoice")) {
         ele.classList.add("showVoiceCls");
-        ele.lastChild.lastChild.className = "voiceCls pauseVoice";
+        ele.querySelector('.optionItems').lastChild.className = "optionItem pauseVoice";
     }
     if (existVoice >= 2) {
         voiceContentQuene.push(content);
@@ -2559,7 +2576,7 @@ const generateText = (message) => {
         data[idx].content = message;
         resumeSend();
         if (idx !== data.length - 1) {
-            requestEle.children[1].textContent = message;
+            requestEle.children[0].textContent = message;
             if (data[idx + 1].role !== "assistant") {
                 if (currentVoiceIdx !== void 0) {
                     if (currentVoiceIdx > idx) {currentVoiceIdx++}
@@ -2581,7 +2598,7 @@ const generateText = (message) => {
         requestEle = createConvEle("request");
         data.push({role: "user", content: message});
     }
-    requestEle.children[1].textContent = message;
+    requestEle.children[0].textContent = message;
     if (chatsData[activeChatIdx].name === translations[locale]["newChatName"]) {
         if (message.length > 20) message = message.slice(0, 17) + "...";
         chatsData[activeChatIdx].name = message;
