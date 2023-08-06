@@ -383,8 +383,14 @@ const formatMdEle = (ele, model) => {
         avatar.className = "chatAvatar";
     let realMd = document.createElement("div");
     if (ele.className === "response") {
-        avatar.classList.add((model && model.startsWith("gpt-4")) ? "gpt4Avatar" : "gpt3Avatar");
-        avatar.innerHTML =  `<svg width="22" height="22"><use xlink:href="#aiIcon"></use></svg>`;
+        if(model=="Cluade-2"){
+            avatar.classList.add("CluadeAvatar");
+            avatar.innerHTML =  `<svg width="22" height="22"><use xlink:href="#CluadeAiIcon"></use></svg>`;    
+        }
+        else{
+            avatar.classList.add((model && model.startsWith("gpt-4")) ? "gpt4Avatar" : "gpt3Avatar");
+            avatar.innerHTML =  `<svg width="22" height="22"><use xlink:href="#aiIcon"></use></svg>`;
+        } 
         ele.appendChild(avatar);
         realMd.className =  "markdown-body";
         ele.appendChild(realMd);
