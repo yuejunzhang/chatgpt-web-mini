@@ -1391,6 +1391,8 @@ const initSetting = () => {
     modelEle.onchange = () => {
         modelVersion = modelEle.value;
         localStorage.setItem("modelVersion", modelVersion);
+        apiHost = apiHostEle.value = envAPIEndpoint || localApiHost || apiHostEle.getAttribute("value") || "";
+        if (modelVersion=="Cluade-2"){apiHost=envCluadeAPIEndpoint;localStorage.setItem("APIHost", apiHost);}////////////////////////////////////////
     }
     modelEle.dispatchEvent(new Event("change"));
     const apiHostEle = document.getElementById("apiHostInput");
@@ -1453,14 +1455,18 @@ const initSetting = () => {
         if (!(ev.relatedTarget && apiSelectEle.contains(ev.relatedTarget))) apiSelectEle.style.display = "none";
     }
     let localApiHost = localStorage.getItem("APIHost");
+    
     apiHost = apiHostEle.value = envAPIEndpoint || localApiHost || apiHostEle.getAttribute("value") || "";
+   
     apiHostEle.onchange = () => {
+        if (modelVersion=="Cluade-2"){apiHost=envCluadeAPIEndpoint}
         apiHost = apiHostEle.value;
         if (apiHost.length && !apiHost.endsWith("/")) {
             apiHost += "/";
             apiHostEle.value = apiHost;
         }
         if (apiHost && apiSelects.indexOf(apiHost) === -1) appendApiOption();
+        if (modelVersion=="Cluade-2"){apiHost=envCluadeAPIEndpoint}////////////////////////////////////////
         localStorage.setItem("APIHost", apiHost);
     }
     apiHostEle.dispatchEvent(new Event("change"));
@@ -2234,8 +2240,10 @@ const autoSpeechEvent = (content, ele, force = false, end = false) => {
         ele.classList.add("showVoiceCls");
         ele.querySelector('.optionItems').lastChild.className = "optionItem pauseVoice";
     }
-        //跳过##
+    //跳过##
+
     content=content.replace(/[*#]/g, '');
+ 
     if (existVoice >= 2) {
         voiceContentQuene.push(content);
         voiceEndFlagQuene.push(end);
@@ -2653,6 +2661,12 @@ clearEle.onclick = () => {
 let PreConnected = false; // 等待标志
 
 async function PreConnection() {// 预连接
+    // fetch(apiHost, {
+    //     method: 'GET',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //   });
     autoVoiceEle = document.getElementById("enableAutoVoice");
     if(existVoice >= 2 && autoVoiceEle.checked && !PreConnected ){
         // PreConnected = true;
