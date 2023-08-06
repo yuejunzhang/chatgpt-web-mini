@@ -2235,7 +2235,7 @@ const autoSpeechEvent = (content, ele, force = false, end = false) => {
         ele.querySelector('.optionItems').lastChild.className = "optionItem pauseVoice";
     }
         //跳过##
-    content=content.replace(/#/g, '');
+    content=content.replace(/[*#]/g, '');
     if (existVoice >= 2) {
         voiceContentQuene.push(content);
         voiceEndFlagQuene.push(end);
