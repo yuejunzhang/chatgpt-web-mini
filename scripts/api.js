@@ -383,9 +383,9 @@ const formatMdEle = (ele, model) => {
         avatar.className = "chatAvatar";
     let realMd = document.createElement("div");
     if (ele.className === "response") {
-        if(model=="Cluade-2"){
-            avatar.classList.add("CluadeAvatar");
-            avatar.innerHTML =  `<svg width="22" height="22"><use xlink:href="#CluadeAiIcon"></use></svg>`;    
+        if(model=="Claude-2"){
+            avatar.classList.add("ClaudeAvatar");
+            avatar.innerHTML =  `<svg width="22" height="22"><use xlink:href="#ClaudeAiIcon"></use></svg>`;    
         }
         else{
             avatar.classList.add((model && model.startsWith("gpt-4")) ? "gpt4Avatar" : "gpt3Avatar");
@@ -1398,7 +1398,7 @@ const initSetting = () => {
         modelVersion = modelEle.value;
         localStorage.setItem("modelVersion", modelVersion);
         apiHost = apiHostEle.value = envAPIEndpoint || localApiHost || apiHostEle.getAttribute("value") || "";
-        if (modelVersion=="Cluade-2"){apiHost=envCluadeAPIEndpoint;localStorage.setItem("APIHost", apiHost);}////////////////////////////////////////
+        if (modelVersion=="Claude-2"){apiHost=envClaudeAPIEndpoint;localStorage.setItem("APIHost", apiHost);}////////////////////////////////////////
     }
     modelEle.dispatchEvent(new Event("change"));
     const apiHostEle = document.getElementById("apiHostInput");
@@ -1465,14 +1465,14 @@ const initSetting = () => {
     apiHost = apiHostEle.value = envAPIEndpoint || localApiHost || apiHostEle.getAttribute("value") || "";
    
     apiHostEle.onchange = () => {
-        if (modelVersion=="Cluade-2"){apiHost=envCluadeAPIEndpoint}
+        if (modelVersion=="Claude-2"){apiHost=envClaudeAPIEndpoint}
         apiHost = apiHostEle.value;
         if (apiHost.length && !apiHost.endsWith("/")) {
             apiHost += "/";
             apiHostEle.value = apiHost;
         }
         if (apiHost && apiSelects.indexOf(apiHost) === -1) appendApiOption();
-        if (modelVersion=="Cluade-2"){apiHost=envCluadeAPIEndpoint}////////////////////////////////////////
+        if (modelVersion=="Claude-2"){apiHost=envClaudeAPIEndpoint}////////////////////////////////////////
         localStorage.setItem("APIHost", apiHost);
     }
     apiHostEle.dispatchEvent(new Event("change"));
