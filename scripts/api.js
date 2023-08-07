@@ -329,12 +329,14 @@ const mdOptionEvent = function (ev) {
             clearEle.classList.add("closeConv");
         } else if (id === "refreshMd") {
             if(modelVersion=="Claude-2"){
-                chatlog.children[idx].children[0].className ="ClaudeAvatar";
-                chatlog.children[idx].children[0].innerHTML =  `<svg width="22" height="22"><use xlink:href="#ClaudeAiIcon"></use></svg>`;    
+                
+                chatlog.children[idx].children[0].innerHTML =  `<svg width="22" height="22"><use xlink:href="#ClaudeAiIcon"></use></svg>`;  
+                chatlog.children[idx].children[0].children[0].className ="ClaudeAvatar";  
             }
             else{
-                chatlog.children[idx].children[0].className =((modelVersion && modelVersion.startsWith("gpt-4")) ? "gpt4Avatar" : "gpt3Avatar");
+                
                 chatlog.children[idx].children[0].innerHTML =  `<svg width="22" height="22"><use xlink:href="#aiIcon"></use></svg>`;
+                chatlog.children[idx].children[0].children[0].className =((modelVersion && modelVersion.startsWith("gpt-4")) ? "gpt4Avatar" : "gpt3Avatar");
             } 
             if (noLoading()) {
                 if (ev.target.classList.contains("refreshReq")) {
