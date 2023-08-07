@@ -1509,7 +1509,7 @@ const initSetting = () => {
     setAvatar.dispatchEvent(new Event("change"));
     let localSystem = localStorage.getItem("system");
     systemEle.onchange = () => {
-        systemRole = systemEle.value ;
+        systemRole = systemEle.value +" " ;
         localStorage.setItem("system", systemRole);
         
         if (systemRole) {
@@ -1526,7 +1526,7 @@ const initSetting = () => {
         updateChats();
     }
     if (systemRole === void 0) {
-        systemRole = systemEle.value = localSystem || presetRoleData.default || "" ;
+        systemRole = systemEle.value = localSystem || presetRoleData.default || " " ;
         
         if (systemRole) {
             data.unshift({role: "system", content: systemRole });
@@ -2440,13 +2440,14 @@ const streamGen = async (long,append) => {
             let appendMsg = {role: "system", content: append };
             dataSlice.push(appendMsg);
         }
-        if (systemRole){
+        if (systemRole){//即便为默认无角色，systemRole也被设为了" ",所以systemRole不为空
             let conversationPrompt ="\n非问勿答,现在时间:"+ new Date().toLocaleString('zh-CN');
-            dataSlice[0].content+=conversationPrompt
-        }else{
-            let conversationPrompt={role:"system",content: "\n非问勿答,现在时间:"+new Date().toLocaleString('zh-CN')}
-            dataSlice.unshift(conversationPrompt)
+            dataSlice[0].content=dataSlice[0].content.slice(0, -len(conversationPrompt))+conversationPrompt;
         }
+        // else{
+        //     let conversationPrompt={role:"system",content: "\n非问勿答,现在时间:"+new Date().toLocaleString('zh-CN')}
+        //     dataSlice.unshift(conversationPrompt)
+        // }
         // dataSlice.unshift(conversationPrompt);
         // PreConnection();
         let headers = {"Content-Type": "application/json"};
