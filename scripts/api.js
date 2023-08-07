@@ -328,6 +328,7 @@ const mdOptionEvent = function (ev) {
             clearEle.title = translations[locale]["cancel"];
             clearEle.classList.add("closeConv");
         } else if (id === "refreshMd") {
+                if (modelVersion=="Claude-2"){chatlog.children[idx].children[0].innerHTML="<svg width='22' height='22'><use xlink:href='#ClaudeAiIcon'></use></svg>";}
             if (noLoading()) {
                 if (ev.target.classList.contains("refreshReq")) {
                     chatlog.children[idx].children[1].innerHTML = "<p class='cursorCls'><br /></p>";
@@ -2432,10 +2433,9 @@ const streamGen = async (long,append) => {
             let appendMsg = {role: "system", content: append };
             dataSlice.push(appendMsg);
         }
-        
         let conversationPrompt = {role: "system", content: "非问勿答，现在时间:"+ new Date().toLocaleString('zh-CN') };
-        // dataSlice[0].content+="\n现在时间:"+ new Date().toLocaleString('zh-CN')+" (在需要时透露时间)";
-        dataSlice.unshift(conversationPrompt);
+        dataSlice[0].content+=conversationPrompt
+        // dataSlice.unshift(conversationPrompt);
         // PreConnection();
         let headers = {"Content-Type": "application/json"};
         if (customAPIKey) headers["Authorization"] = "Bearer " + customAPIKey;
