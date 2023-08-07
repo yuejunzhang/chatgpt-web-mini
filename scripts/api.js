@@ -1509,7 +1509,7 @@ const initSetting = () => {
     setAvatar.dispatchEvent(new Event("change"));
     let localSystem = localStorage.getItem("system");
     systemEle.onchange = () => {
-        systemRole = systemEle.value +" " ;
+        systemRole = systemEle.value ;
         localStorage.setItem("system", systemRole);
         
         if (systemRole) {
@@ -1526,7 +1526,7 @@ const initSetting = () => {
         updateChats();
     }
     if (systemRole === void 0) {
-        systemRole = systemEle.value = localSystem || presetRoleData.default || " " ;
+        systemRole = systemEle.value = localSystem || presetRoleData.default || "" ;
         
         if (systemRole) {
             data.unshift({role: "system", content: systemRole });
@@ -2440,7 +2440,7 @@ const streamGen = async (long,append) => {
             let appendMsg = {role: "system", content: append };
             dataSlice.push(appendMsg);
         }
-
+        dataSlice.splice(1,0,{role: "system",content: "\n当前时间："+ new Date().toLocaleString('zh-CN')})
         let headers = {"Content-Type": "application/json"};
         if (customAPIKey) headers["Authorization"] = "Bearer " + customAPIKey;
         const res = await fetch(apiHost + API_URL, {
