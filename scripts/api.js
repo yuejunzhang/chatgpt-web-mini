@@ -329,10 +329,11 @@ const mdOptionEvent = function (ev) {
             clearEle.classList.add("closeConv");
         } else if (id === "refreshMd") {
             if(modelVersion=="Claude-2"){
+                chatlog.children[idx].children[0].className ="ClaudeAvatar";
                 chatlog.children[idx].children[0].innerHTML =  `<svg width="22" height="22"><use xlink:href="#ClaudeAiIcon"></use></svg>`;    
             }
             else{
-                chatlog.children[idx].children[0].classList.add((modelVersion && modelVersion.startsWith("gpt-4")) ? "gpt4Avatar" : "gpt3Avatar");
+                chatlog.children[idx].children[0].className =((modelVersion && modelVersion.startsWith("gpt-4")) ? "gpt4Avatar" : "gpt3Avatar");
                 chatlog.children[idx].children[0].innerHTML =  `<svg width="22" height="22"><use xlink:href="#aiIcon"></use></svg>`;
             } 
             if (noLoading()) {
@@ -2439,7 +2440,7 @@ const streamGen = async (long,append) => {
             let appendMsg = {role: "system", content: append };
             dataSlice.push(appendMsg);
         }
-        let conversationPrompt = {role: "system", content: "非问勿答，现在时间:"+ new Date().toLocaleString('zh-CN') };
+        let conversationPrompt = {role: "system", content: "\n非问勿答，现在时间:"+ new Date().toLocaleString('zh-CN') };
         dataSlice[0].content+=conversationPrompt
         // dataSlice.unshift(conversationPrompt);
         // PreConnection();
