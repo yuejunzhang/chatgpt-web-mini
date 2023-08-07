@@ -2440,7 +2440,7 @@ const streamGen = async (long,append) => {
             let appendMsg = {role: "system", content: append };
             dataSlice.push(appendMsg);
         }
-        let conversationPrompt = {role: "system", content: "\n非问勿答，现在时间:"+ new Date().toLocaleString('zh-CN') };
+        let conversationPrompt ="\n非问勿答,现在时间:"+ new Date().toLocaleString('zh-CN');
         dataSlice[0].content+=conversationPrompt
         // dataSlice.unshift(conversationPrompt);
         // PreConnection();
