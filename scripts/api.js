@@ -2440,16 +2440,7 @@ const streamGen = async (long,append) => {
             let appendMsg = {role: "system", content: append };
             dataSlice.push(appendMsg);
         }
-        if (systemRole){//即便为默认无角色，systemRole也被设为了" ",所以systemRole不为空
-            let conversationPrompt ="\n非问勿答,现在时间:"+ new Date().toLocaleString('zh-CN');
-            dataSlice[0].content=dataSlice[0].content.slice(0, -len(conversationPrompt))+conversationPrompt;
-        }
-        // else{
-        //     let conversationPrompt={role:"system",content: "\n非问勿答,现在时间:"+new Date().toLocaleString('zh-CN')}
-        //     dataSlice.unshift(conversationPrompt)
-        // }
-        // dataSlice.unshift(conversationPrompt);
-        // PreConnection();
+
         let headers = {"Content-Type": "application/json"};
         if (customAPIKey) headers["Authorization"] = "Bearer " + customAPIKey;
         const res = await fetch(apiHost + API_URL, {
