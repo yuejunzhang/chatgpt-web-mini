@@ -328,7 +328,13 @@ const mdOptionEvent = function (ev) {
             clearEle.title = translations[locale]["cancel"];
             clearEle.classList.add("closeConv");
         } else if (id === "refreshMd") {
-                if (modelVersion=="Claude-2"){chatlog.children[idx].children[0].innerHTML="<svg width='22' height='22'><use xlink:href='#ClaudeAiIcon'></use></svg>";}
+            if(modelVersion=="Claude-2"){
+                chatlog.children[idx].children[0].innerHTML =  `<svg width="22" height="22"><use xlink:href="#ClaudeAiIcon"></use></svg>`;    
+            }
+            else{
+                chatlog.children[idx].children[0].classList.add((modelVersion && modelVersion.startsWith("gpt-4")) ? "gpt4Avatar" : "gpt3Avatar");
+                chatlog.children[idx].children[0].innerHTML =  `<svg width="22" height="22"><use xlink:href="#aiIcon"></use></svg>`;
+            } 
             if (noLoading()) {
                 if (ev.target.classList.contains("refreshReq")) {
                     chatlog.children[idx].children[1].innerHTML = "<p class='cursorCls'><br /></p>";
