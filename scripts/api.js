@@ -2138,7 +2138,7 @@ const speechEvent = async (idx) => {
     chatlog.children[systemRole ? idx - 1 : idx].classList.add("showVoiceCls");
     let voiceIconEle = chatlog.children[systemRole ? idx - 1 : idx].querySelector('.optionItems').lastChild;
     voiceIconEle.className = "optionItem pauseVoice";
-    let content = data[idx].content;
+    let content = data[idx].content.replace(/[*#]/g, '');
     let volume = voiceVolume[type];
     let rate = voiceRate[type];
     let pitch = voicePitch[type];
